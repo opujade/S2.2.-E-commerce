@@ -87,7 +87,6 @@ function buy(id) {
     cart.push(products[productIndex]);
     cart[cart.length - 1].quantity = 1;
   }
-  console.log(cart);
 }
 
 // Exercise 2
@@ -96,7 +95,6 @@ function cleanCart() {
   for (let i = 0; i < cartLength; i++) {
     cart.pop();
   }
-  console.log(cart);
 }
 
 // Exercise 3
@@ -106,6 +104,7 @@ function calculateTotal() {
     total += cart[i].price * cart[i].quantity;
   }
 }
+
 // Exercise 4
 function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"

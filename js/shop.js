@@ -77,7 +77,9 @@ var total = 0;
 // Exercise 1
 function buy(id) {
   const productIndex = products.findIndex((product) => product.id === id);
-  const cartProductIndex = cart.findIndex((cartProduct) => cartProduct.id === id);
+  const cartProductIndex = cart.findIndex(
+    (cartProduct) => cartProduct.id === id
+  );
 
   if (cartProductIndex != -1) {
     cart[cartProductIndex].quantity += 1;
@@ -85,10 +87,17 @@ function buy(id) {
     cart.push(products[productIndex]);
     cart[cart.length - 1].quantity = 1;
   }
+  console.log(cart);
 }
 
 // Exercise 2
-function cleanCart() {}
+function cleanCart() {
+  const cartLength = cart.length;
+  for (let i = 0; i < cartLength; i++) {
+    cart.pop();
+  }
+  console.log(cart);
+}
 
 // Exercise 3
 function calculateTotal() {

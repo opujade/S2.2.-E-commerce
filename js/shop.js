@@ -83,12 +83,15 @@ function buy(id) {
 
   if (cartProductIndex != -1) {
     cart[cartProductIndex].quantity += 1;
-    cart[cartProductIndex].subtotal = cart[cartProductIndex].price * cart[cartProductIndex].quantity;
+    cart[cartProductIndex].subtotal =
+      cart[cartProductIndex].price * cart[cartProductIndex].quantity;
   } else {
     cart.push(products[productIndex]);
     cart[cart.length - 1].quantity = 1;
     cart[cart.length - 1].subtotal = cart[cart.length - 1].price;
   }
+//   applyPromotionsCart();
+//   calculateTotal();
 }
 
 // Exercise 2
@@ -103,13 +106,26 @@ function cleanCart() {
 function calculateTotal() {
   total = 0;
   for (let i = 0; i < cart.length; i++) {
-    total += cart[i].subtotal;
+    if (cart[i].subtotalWithDiscount == undefined) {
+      total += cart[i].subtotal;
+    } else {
+      total += cart[i].subtotalWithDiscount;
+    }
   }
+//   console.log(cart);
+//   console.log(total);
 }
 
 // Exercise 4
 function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].quantity >= 10) {
+        cart[i].subtotalWithDiscount = cart[i].subtotal * .7;
+    } else if (cart[i].quantity >= 3) {
+        cart[i].subtotalWithDiscount = cart[i].subtotal * .8;
+    }
+  }
 }
 
 // Exercise 5

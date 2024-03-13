@@ -101,9 +101,11 @@ function cleanCart() {
 
 // Exercise 3
 function calculateTotal() {
-  // Calculate total price of the cart using the "cartList" array
+  total = 0;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].price * cart[i].quantity;
+  }
 }
-
 // Exercise 4
 function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"

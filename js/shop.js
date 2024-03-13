@@ -83,9 +83,11 @@ function buy(id) {
 
   if (cartProductIndex != -1) {
     cart[cartProductIndex].quantity += 1;
+    cart[cartProductIndex].subtotal = cart[cartProductIndex].price * cart[cartProductIndex].quantity;
   } else {
     cart.push(products[productIndex]);
     cart[cart.length - 1].quantity = 1;
+    cart[cart.length - 1].subtotal = cart[cart.length - 1].price;
   }
 }
 
@@ -101,7 +103,7 @@ function cleanCart() {
 function calculateTotal() {
   total = 0;
   for (let i = 0; i < cart.length; i++) {
-    total += cart[i].price * cart[i].quantity;
+    total += cart[i].subtotal;
   }
 }
 

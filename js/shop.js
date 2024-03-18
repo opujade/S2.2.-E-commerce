@@ -150,7 +150,7 @@ function printCart() {
     productName.innerHTML = cart[i].name;
 
     let price = document.createElement('td');
-    price.innerHTML = cart[i].price;
+    price.innerHTML = cart[i].price.toFixed(2) + '€';
 
     let removeBtn = document.createElement('button');
     removeBtn.classList = 'btn btn-link text-decoration-none';
@@ -172,7 +172,7 @@ function printCart() {
     quantityTableData.appendChild(addBtn);
 
     let totalProduct = document.createElement('td');
-    totalProduct.innerHTML = cart[i].subtotal.toFixed(2)
+    totalProduct.innerHTML = cart[i].subtotal.toFixed(2) + '€'
 
     tableRow.appendChild(productName);
     tableRow.appendChild(price);

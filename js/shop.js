@@ -180,7 +180,24 @@ function printCart() {
 // ** Nivell II **
 
 // Exercise 7
-function removeFromCart(id) {}
+function removeFromCart(id) {
+  let index = null;
+  for (let i = 0; i < cart.length; i++){
+    if (cart[i].id === id) {
+      index = i;
+      i = cart.length;
+    }
+  }
+
+  if (cart[index].quantity === 1) {
+    cart.splice(index, 1);
+  } else {
+    cart[index].quantity -= 1;
+  }
+  applyPromotionsCart();
+  calculateTotal();
+  printCart();
+}
 
 function open_modal() {
   printCart();

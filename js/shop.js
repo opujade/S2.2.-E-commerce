@@ -153,27 +153,30 @@ function printCart() {
     price.innerHTML = cart[i].price;
 
     let removeBtn = document.createElement('button');
-    removeBtn.classList = 'btn btn-link';
+    removeBtn.classList = 'btn btn-link text-decoration-none';
     removeBtn.addEventListener('click', () => removeFromCart(cart[i].id));
     removeBtn.innerHTML = '-';
 
     let addBtn = document.createElement('button');
-    addBtn.classList = 'btn btn-link';
+    addBtn.classList = 'btn btn-link text-decoration-none';
     addBtn.addEventListener('click', () => buy(cart[i].id));
     addBtn.innerHTML = '+';
 
-    let quantity = document.createElement('td');
-    quantity.classList = 'text-nowrap';
-    quantity.innerHTML += cart[i].quantity;
-    quantity.appendChild(removeBtn);
-    quantity.appendChild(addBtn);
+    let quantity = document.createElement('span');
+    quantity.innerHTML = cart[i].quantity;
+
+    let quantityTableData = document.createElement('td');
+    quantityTableData.classList = 'text-nowrap';
+    quantityTableData.appendChild(removeBtn);
+    quantityTableData.appendChild(quantity);
+    quantityTableData.appendChild(addBtn);
 
     let totalProduct = document.createElement('td');
     totalProduct.innerHTML = cart[i].subtotal.toFixed(2)
 
     tableRow.appendChild(productName);
     tableRow.appendChild(price);
-    tableRow.appendChild(quantity);
+    tableRow.appendChild(quantityTableData);
     tableRow.appendChild(totalProduct);
     cartList.appendChild(tableRow);
   }

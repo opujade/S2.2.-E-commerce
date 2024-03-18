@@ -93,10 +93,14 @@ function buy(id) {
     cart[cart.length - 1].quantity = 1;
     cart[cart.length - 1].subtotal = cart[cart.length - 1].price; // Crear la propiedad subtotal para después poder operar con el precio total sin modificar el precio original.
   }
+  refreshCart();
+}
+
+const refreshCart = () => {
   applyPromotionsCart();
   calculateTotal();
   printCart();
-}
+};
 
 // Exercise 2
 function cleanCart() {
@@ -105,22 +109,15 @@ function cleanCart() {
     cart.pop();
   }
   total = 0;
-  printCart();
+  refreshCart();
 }
 
 // Exercise 3
 function calculateTotal() {
   total = 0;
   for (let i = 0; i < cart.length; i++) {
-    if (cart[i].subtotalWithDiscount == undefined) {
-      // Si existe un subtotal con descuento tomará el descuento para calcular el precio total. Así también podemos saber el subtotal sin descuento por si lo necesitásemos en un futuro (poner un precio tachado, por ejemplo).
-      total += cart[i].subtotal;
-    } else {
-      total += cart[i].subtotalWithDiscount;
-    }
+    total += cart[i].subtotal;
   }
-  //   console.log(cart);
-  //   console.log(total);
 }
 
 // Exercise 4
@@ -128,9 +125,9 @@ function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].quantity >= 10) {
-      cart[i].subtotalWithDiscount = cart[i].subtotal * 0.7;
+      cart[i].subtotal *= 0.7; // Descuento del 30%
     } else if (cart[i].quantity >= 3) {
-      cart[i].subtotalWithDiscount = cart[i].subtotal * 0.8;
+      cart[i].subtotal *= 0.8; // Descuento del 20%
     }
   }
 }
@@ -143,22 +140,36 @@ function printCart() {
         <tr>
             <th scope="row">Nombre producto</th>
             <td>Precio</td>
-            <td>Cantidad</td>
+            <td><button removeFromCart(id)>Cantidad<button buy(id)></td>
         </tr> 
     */
     let tableRow = document.createElement('tr');
+
     let productName = document.createElement('th');
     productName.scope = 'row';
     productName.innerHTML = cart[i].name;
+
     let price = document.createElement('td');
     price.innerHTML = cart[i].price;
+
+    let removeBtn = document.createElement('button');
+    removeBtn.classList = 'btn btn-link';
+    removeBtn.addEventListener('click', () => removeFromCart(cart[i].id));
+    removeBtn.innerHTML = '-';
+
+    let addBtn = document.createElement('button');
+    addBtn.classList = 'btn btn-link';
+    addBtn.addEventListener('click', () => buy(cart[i].id));
+    addBtn.innerHTML = '+';
+
     let quantity = document.createElement('td');
-    quantity.innerHTML = cart[i].quantity;
+    quantity.classList = 'text-nowrap';
+    quantity.innerHTML += cart[i].quantity;
+    quantity.appendChild(removeBtn);
+    quantity.appendChild(addBtn);
+
     let totalProduct = document.createElement('td');
-    // Devuelve subtotal con descuento si existe. Sino devuelve el subtotal sin descuento.
-    totalProduct.innerHTML = cart[i].subtotalWithDiscount
-      ? cart[i].subtotalWithDiscount.toFixed(2)
-      : cart[i].subtotal.toFixed(2);
+    totalProduct.innerHTML = cart[i].subtotal.toFixed(2)
 
     tableRow.appendChild(productName);
     tableRow.appendChild(price);
@@ -181,22 +192,17 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
-  let index = null;
-  for (let i = 0; i < cart.length; i++){
-    if (cart[i].id === id) {
-      index = i;
-      i = cart.length;
-    }
-  }
+  let index = cart.findIndex((product) => product.id == id);
 
-  if (cart[index].quantity === 1) {
+  if (cart[index].quantity == 1) {
     cart.splice(index, 1);
   } else {
     cart[index].quantity -= 1;
+    cart[index].subtotal =
+      cart[index].price * cart[index].quantity;
   }
-  applyPromotionsCart();
-  calculateTotal();
-  printCart();
+
+  refreshCart();
 }
 
 function open_modal() {

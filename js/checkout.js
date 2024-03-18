@@ -68,7 +68,6 @@ const validatePassword = (password) => {
 // Validate Phone Form
 const validatePhone = (phone) => {
   if (!validateLength(phone.value) || isNaN(phone.value)) {
-    error++;
     phone.classList = 'form-control is-invalid';
   } else {
     phone.classList = 'form-control is-valid';

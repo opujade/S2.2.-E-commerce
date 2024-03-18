@@ -6,4 +6,28 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 
+.card {
+    transition: .2s;
+    cursor: pointer;
+    opacity: .7;
+}
+
+.card:hover{
+    transform: scale(1.01);
+    opacity: 1;
+}
+
+header {
+    background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z3JvY2VyeSUyMHN0b3JlfGVufDB8fDB8fHww');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+h1{
+    font-family: "Copse", serif;
+}
 @import '../node_modules/bootstrap/scss/bootstrap.scss';

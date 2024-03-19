@@ -1,0 +1,22 @@
+$primary: #49A078;
+$secondary: #9CC5A1;
+$light: #DCE1DE;
+$dark: #1F2421;
+$third: #216869;
+
+
+$custom-colors: (
+  'third': $third,
+);
+
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'light': $light,
+  'dark': $dark,
+  'danger': red,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+$font-family-base: "Montserrat", sans-serif;

@@ -2,6 +2,7 @@ const alphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïð'.split(
     ''
   );
+
 // Get the input fields
 const fName = document.getElementById('fName');
 const fEmail = document.getElementById('fEmail');
@@ -10,26 +11,40 @@ const fLastN = document.getElementById('fLastN');
 const fPassword = document.getElementById('fPassword');
 const fPhone = document.getElementById('fPhone');
 
-fName.addEventListener('keyup', () => validateNameLast(fName));
+fName.addEventListener('keyup', () => validateNameAndLastName(fName));
 fEmail.addEventListener('keyup', () => validateMail(fEmail));
 fAddress.addEventListener('keyup', () => validateAddress(fAddress));
-fLastN.addEventListener('keyup', () => validateNameLast(fLastN));
+fLastN.addEventListener('keyup', () => validateNameAndLastName(fLastN));
 fPassword.addEventListener('keyup', () => validatePassword(fPassword));
 fPhone.addEventListener('keyup', () => validatePhone(fPhone));
 
 // Exercise 6
 function validate() {
   // Validate calls
-  validateNameLast(fName);
-  validateNameLast(fLastN);
+  validateNameAndLastName(fName);
+  validateNameAndLastName(fLastN);
   validateMail(fEmail);
   validateAddress(fAddress);
   validatePassword(fPassword);
   validatePhone(fPhone);
+
+  if (
+    validateNameAndLastName(fName) &&
+    validateNameAndLastName(fLastN) &&
+    validateMail(fEmail) &&
+    validateAddress(fAddress) &&
+    validatePassword(fPassword) &&
+    validatePhone(fPhone)
+  ) {
+    document.getElementById('form-feedback').classList += ' d-block';
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+  }
 }
 
 //Validate Name and Last Name Form
-const validateNameLast = (item) => {
+const validateNameAndLastName = (item) => {
   if (!validateLength(item.value) || !validateAlphabet(item.value)) {
     item.classList = 'form-control is-invalid';
     return false;
@@ -42,16 +57,20 @@ const validateNameLast = (item) => {
 const validateMail = (mail) => {
   if (!validateLength(mail.value) || !validateMailAt(mail.value)) {
     mail.classList = 'form-control is-invalid';
+    return false;
   } else {
     mail.classList = 'form-control is-valid';
+    return true;
   }
 };
 // Validate Adress Form
 const validateAddress = (address) => {
   if (!validateLength(address.value)) {
     address.classList = 'form-control is-invalid';
+    return false;
   } else {
     address.classList = 'form-control is-valid';
+    return true;
   }
 };
 // Validate Password Form
@@ -61,16 +80,21 @@ const validatePassword = (password) => {
     !validatePasswordChar(password.value)
   ) {
     password.classList = 'form-control is-invalid';
+    return false;
   } else {
     password.classList = 'form-control is-valid';
+    return true;
   }
 };
+
 // Validate Phone Form
 const validatePhone = (phone) => {
   if (!validateLength(phone.value) || isNaN(phone.value)) {
     phone.classList = 'form-control is-invalid';
+    return false;
   } else {
     phone.classList = 'form-control is-valid';
+    return true;
   }
 };
 
@@ -120,3 +144,5 @@ const validateMailAt = (mail) => {
   });
   return correct;
 };
+
+// Errors

@@ -79,23 +79,27 @@ const cartList = document.getElementById('cart_list');
 
 // Exercise 1
 function buy(id) {
+  // Encontrar índice de los productos
   const productIndex = products.findIndex((product) => product.id === id);
   const cartProductIndex = cart.findIndex(
     (cartProduct) => cartProduct.id === id
   );
 
+  // Si no es -1, existe: añadimos 1 a quantity y calculamos subtotal (precio * cantidad)
   if (cartProductIndex != -1) {
     cart[cartProductIndex].quantity += 1;
     cart[cartProductIndex].subtotal =
       cart[cartProductIndex].price * cart[cartProductIndex].quantity;
+  // Si es -1, no existe: añadimos producto a cart, creamos propiedad quantity = 1 y subtotal.
   } else {
     cart.push(products[productIndex]);
     cart[cart.length - 1].quantity = 1;
-    cart[cart.length - 1].subtotal = cart[cart.length - 1].price; // Crear la propiedad subtotal para después poder operar con el precio total sin modificar el precio original.
+    cart[cart.length - 1].subtotal = cart[cart.length - 1].price;
   }
   refreshCart();
 }
 
+// Función para actualizar carrito (precio total, promociones e imprimir en pantalla)
 const refreshCart = () => {
   applyPromotionsCart();
   calculateTotal();
@@ -104,6 +108,7 @@ const refreshCart = () => {
 
 // Exercise 2
 function cleanCart() {
+  // Eliminar todos los elementos de cart
   const cartLength = cart.length;
   for (let i = 0; i < cartLength; i++) {
     cart.pop();
@@ -122,7 +127,6 @@ function calculateTotal() {
 
 // Exercise 4
 function applyPromotionsCart() {
-  // Apply promotions to each item in the array "cart"
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].quantity >= 10) {
       cart[i].subtotal *= 0.7; // Descuento del 30%
@@ -150,7 +154,7 @@ function printCart() {
     productName.innerHTML = cart[i].name;
 
     let price = document.createElement('td');
-    price.innerHTML = cart[i].price;
+    price.innerHTML = cart[i].price.toFixed(2) + '€';
 
     let removeBtn = document.createElement('button');
     removeBtn.classList = 'btn btn-link text-decoration-none';
@@ -172,7 +176,7 @@ function printCart() {
     quantityTableData.appendChild(addBtn);
 
     let totalProduct = document.createElement('td');
-    totalProduct.innerHTML = cart[i].subtotal.toFixed(2)
+    totalProduct.innerHTML = cart[i].subtotal.toFixed(2) + '€'
 
     tableRow.appendChild(productName);
     tableRow.appendChild(price);

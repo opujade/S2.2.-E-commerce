@@ -14,6 +14,7 @@ $theme-colors: (
   'secondary': $secondary,
   'light': $light,
   'dark': $dark,
+  'danger': red,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
